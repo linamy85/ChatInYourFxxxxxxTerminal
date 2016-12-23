@@ -5,7 +5,7 @@ var Account = require('../models/account');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'CN2016', user: req.user, error: req.session.error });
+  res.render('index', { title: '滿滿的大平台', user: req.user, error: req.session.error });
 });
 
 router.get('/register', function(req, res) {
