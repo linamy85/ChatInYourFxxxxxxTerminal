@@ -137,6 +137,7 @@ router.post('/payload', function(req, res) {
   exec('/usr/bin/git pull origin master', function(err, stdout, stderr){
     if (err) return err;
     console.log(stdout);
+    res.status(200).send("Updated!"+stdout)
   });
 });
 
