@@ -9,11 +9,16 @@
     <p>Welcome to <%= title %></p>
     <% if (locals.user) { %>
       <h4>Hey <%= locals.user.username %>, you finally come.</h4>
+      <ul id="roomlist"></ul>
+      <button onclick="createroom()">Create room</button>
+      <br/>
       <a href="/logout">Logout</a>
     <% } else { %>
       <a href="/register">Register</a>
       <a href="/login">Login</a>
     <% } %>
 
+    <script type="text/javascript" src="./jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="./index.js"></script>
   </body>
 </html>

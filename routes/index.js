@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var Account = require('../models/account');
+var Chatroom = require('../models/chatroom');
+var Message = require('../models/message');
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: '滿滿的大平台', user: req.user, error: req.session.error });
 });
@@ -37,8 +38,87 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
-  console.log(req.user ,"logs in.")
+  console.log(req.user.username ,"logs in.")
   res.redirect('/');
+});
+
+router.get('/rooms', function(req, res) {
+  console.log("User ", req.user.username, "finds own rooms")
+  Chatroom.find({ users: req.user.username }, function(err, rooms) {
+    if (err) {
+      res.status(500)
+      return console.log("Chatroom loading error:", err)
+    }
+    res.send(rooms)
+  });
+});
+
+// req.body ::
+//    users: target user that should be with req.user to create room.
+//    roomid: chat room name.
+router.post('/rooms/new', function(req, res) {
+  console.log("hwwwwwwww ", req.user, "->", req.body)
+  req.body.users.push(req.user.username);
+
+  Account.find({'username': {$in: req.body.users}}, function(err, users) {
+    if (err) {
+      res.status(500)
+      return console.log("Error loading target users:", err)
+    }
+    // Only username is needed.
+    users = users.map(x => x.username)
+
+    console.log("Targets:", users)
+    var room = new Chatroom({
+      users: users,
+      name: req.body.roomid
+    })
+    room.save(function(err) {
+      if (err) {
+        //res.status(500)
+        return console.log("Error creating chatroom:", err)
+      }
+      res.json(room)
+    })
+  })
+});
+
+router.get('/message/:room', function(req, res) {
+  console.log(req.params)
+  console.log(req.user.username, "enters room", req.params.room);
+  Chatroom.findById(req.params.room, function(err, room) {
+    if (err) {
+      res.status(500)
+      return console.log("Load chatroom: ", err)
+    }
+    if (l.indexOf(req.user.username) < 0) {
+      console.log("User", req.user.username, "tried to hack into", room.name)
+      // TODO: hack page
+      res.render('hack', {user: req.user})
+    }
+    console.log("Found ", req.params.room, "->", room)
+    res.render('message', {
+      user: req.user,
+      room: room
+    });
+  })
+});
+
+router.post('/message/:room', function(req, res) {
+  console.log(req.body);
+  var msg = new Message({
+    chatroom: req.query.room,
+    sender: req.user.username,
+    text: req.body.text,
+    sticker: req.body.sticker
+  })
+  msg.save(function(err) {
+    if (err) {
+      res.status(500)
+      return console.log("Save new message: ", err);
+    }
+    res.status(200)
+  })
 });
 
 router.get('/logout', function(req, res) {
