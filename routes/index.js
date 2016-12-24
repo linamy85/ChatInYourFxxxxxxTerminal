@@ -5,6 +5,8 @@ var Account = require('../models/account');
 var Chatroom = require('../models/chatroom');
 var Message = require('../models/message');
 
+var exec = require('child_process').exec; 
+
 router.get('/', function(req, res, next) {
   res.render('index', { title: '滿滿的大平台', user: req.user, error: req.session.error });
 });
@@ -128,6 +130,14 @@ router.get('/logout', function(req, res) {
 
 router.get('/ping', function(req, res){
   res.status(200).send("pong!");
+});
+
+router.post('/payload', function(req, res) {
+  console.log("Get new repo push:", req.body.head_commit)
+  exec('/usr/bin/git pull origin master', function(err, stdout, stderr){
+    if (err) return err;
+    console.log(stdout);
+  });
 });
 
 
