@@ -7,3 +7,5 @@ As you know, computer network 2016 final project.
 2. Chatroom
 3. File transmission
 4. Blah blah chill features
+
+## What to expect?
