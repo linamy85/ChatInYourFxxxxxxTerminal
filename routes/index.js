@@ -93,7 +93,7 @@ router.get('/message/:room', function(req, res) {
       res.status(500)
       return console.log("Load chatroom: ", err)
     }
-    if (l.indexOf(req.user.username) < 0) {
+    if (room.users.indexOf(req.user.username) < 0) {
       console.log("User", req.user.username, "tried to hack into", room.name)
       // TODO: hack page
       res.render('hack', {user: req.user})
