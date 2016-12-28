@@ -1,4 +1,4 @@
-# ChatInYourFxxxxxxTerminal
+# ChatInYourFantasyTerminal
 
 As you know, computer network 2016 final project.
 Or more than that?
