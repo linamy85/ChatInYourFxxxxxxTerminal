@@ -22,7 +22,9 @@ $(document).ready(function() {
 
 function createroom() {
   var name = prompt("Room name plz:")
-  if (name == '') {
+  if (name === null) {  // User cancelled creating room.
+    return;
+  } else if (name == '') {
     alert("No empty room name!!!")
     return;
   }
@@ -35,7 +37,10 @@ function createroom() {
       "Invite user #"+index+" to join chat! "+
       "(empty string for end of user list)"
     )
-    if (curuser == "") {
+    if (curuser === null) {
+      console.log("User cancelled creating room.")
+      return;
+    } else if (curuser == "") {
       break;
     }
     list.push(curuser)
@@ -45,13 +50,6 @@ function createroom() {
   console.log("Room:", name)
   console.log("Users:", list)
   
-
-  //$.post('/rooms/new', 
-    //'{"users": ['+list.join(',')+'], "roomid": '+name+'}',
-    //function(data) {
-      //console.log(data)
-      //reloadrooms();
-    //}, 'json');
   $.ajax({
     type: 'POST',
     url: '/rooms/new',

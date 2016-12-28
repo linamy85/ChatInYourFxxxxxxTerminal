@@ -85,43 +85,6 @@ router.post('/rooms/new', function(req, res) {
   })
 });
 
-router.get('/message/:room', function(req, res) {
-  console.log(req.params)
-  console.log(req.user.username, "enters room", req.params.room);
-  Chatroom.findById(req.params.room, function(err, room) {
-    if (err) {
-      res.status(500)
-      return console.log("Load chatroom: ", err)
-    }
-    if (room.users.indexOf(req.user.username) < 0) {
-      console.log("User", req.user.username, "tried to hack into", room.name)
-      // TODO: hack page
-      res.render('hack', {user: req.user})
-    }
-    console.log("Found ", req.params.room, "->", room)
-    res.render('message', {
-      user: req.user,
-      room: room
-    });
-  })
-});
-
-router.post('/message/:room', function(req, res) {
-  console.log(req.body);
-  var msg = new Message({
-    chatroom: req.query.room,
-    sender: req.user.username,
-    text: req.body.text,
-    sticker: req.body.sticker
-  })
-  msg.save(function(err) {
-    if (err) {
-      res.status(500)
-      return console.log("Save new message: ", err);
-    }
-    res.status(200)
-  })
-});
 
 router.get('/logout', function(req, res) {
   req.logout();
