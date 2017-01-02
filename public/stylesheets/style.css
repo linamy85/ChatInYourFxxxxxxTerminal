@@ -6,3 +6,18 @@ body {
 a {
   color: #00B7FF;
 }
+.bg{
+	background-color: black;
+}
+/*for words shown in black backgroud*/
+.word{
+	color: white;
+	font-family: 'Play', sans-serif;
+}
+.list{
+	font-family: 'Gloria Hallelujah', cursive;
+}
+/*for button*/
+#word{
+	font-family: 'Play', sans-serif;
+}

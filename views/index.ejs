@@ -3,22 +3,37 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+    <!-- icon -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css?family=Exo|Gloria+Hallelujah|Kumar+One|Orbitron|Play|Poiret+One|Space+Mono" rel="stylesheet">
   </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+  <body class="bg" align="center">
+  <!-- style="background-color:#FFD382;padding:10px;margin-bottom:5px;" -->
+  <div>
+    <h1 class="word"><i class="fa fa-terminal" aria-hidden="true"></i><%= title %></h1>
+    
+    <!-- <p>Welcome to <%= title %></p> -->
     <% if (locals.user) { %>
-      <h4>Hey <%= locals.user.username %>, you finally come.</h4>
-      <ul id="roomlist"></ul>
-      <button onclick="createroom()">Create room</button>
-      <br/>
-      <a href="/logout">Logout</a>
+      <h4 class="word">Hey <%= locals.user.username %>, I miss you...</h4>
+      <div style="background-color:white;padding:10px;margin-bottom:15px;">
+      <ul class="list" id="roomlist"></ul>
+      </div>
+      <button id="word" class="btn btn-warning" onclick="createroom()">Create room</button>
+      &nbsp;
+      <!-- <a href="/logout">Logout</a> -->
+      <button id="word" class="btn btn-default" onclick="location.href='/logout'">Logout</button>
     <% } else { %>
-      <a href="/register">Register</a>
-      <a href="/login">Login</a>
+      <h1 class="word">2017</h1>
+      <h2 class="word">Join now...<h2>
+      <button id="word" class="btn btn-default" onclick="location.href='/register'">Register</button>
+      &nbsp;
+      <button id="word" class="btn btn-warning" onclick="location.href='/login'">Login</button>
+      <!-- <a href="/register">Register</a> -->
+      <!-- <a href="/login">Login</a> -->
     <% } %>
-
-
+  </div>
     <script type="text/javascript" src="./jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="./index.js"></script>
   </body>

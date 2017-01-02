@@ -4,24 +4,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen" />
     <link rel="stylesheet"  href="/stylesheets/style.css" />
+    <!-- icon -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css?family=Exo|Gloria+Hallelujah|Kumar+One|Orbitron|Play|Poiret+One|Space+Mono" rel="stylesheet">    
   </head>
-  <body>
+  <body class="bg">
 
-    <div class="container">
-      <h1>Login now!!!</h1>
-      <p>Come on have fun with secrets...</p>
+    <div class="container" align="center">
+      <h1 class="word">Log-in to your account</h1>
+      <p class="word">Have fun with terminal...</p>
       <br />
-      <form role="form" action="/login" method="post" style="max-width: 300px;">
+      <form role="form" action="/login" method="post" style="max-width: 250px;">
         <div class-"form-group">
-          <input class="form-control" type="text" name="username" placeholder="Trump">
+          <input class="form-control" type="text" name="username" placeholder="ID">
         </div>
+        <br>
         <div class-"form-group">
-          <input class="form-control" type="password" name="password" placeholder="Your secret">
+          <input class="form-control" type="password" name="password" placeholder="Password">
         </div>
-        <button class="btn btn-default" type="submit">Go!</button>
+        <br>
+        <button id="word" class="btn btn-warning" type="submit">Enter</button>
         &nbsp;
         <a href="/">
-          <button class="btn btn-primary" type="button">Cancel</button>
+          <button id="word" class="btn btn-default" type="button">Quit</button>
         </a>
       </form>
     </div>
