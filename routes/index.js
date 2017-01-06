@@ -4,6 +4,8 @@ var passport = require('passport');
 var Account = require('../models/account');
 var Chatroom = require('../models/chatroom');
 var Message = require('../models/message');
+var fse = require('fs-extra');
+var path = require('path');
 
 var exec = require('child_process').exec; 
 
@@ -104,5 +106,20 @@ router.post('/payload', function(req, res) {
   });
 });
 
+router.get('/file', function(req, res) {
+    res.render('test');
+});
+
+router.post('/file', function(req, res) {
+    console.log(req.files);
+    var source = req.files.fileToUpload.file;
+    var dest = global.appRoot + '/save/' + path.basename(source);
+    fse.move(source, dest, function(err){
+        if (err) return console.error(err)
+        console.log("success!")
+    });
+    res.status(200).send('/uplaods' + path.basename(source));
+});
+    
 
 module.exports = router;
