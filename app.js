@@ -3,7 +3,6 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
 var session = require('express-session');
 var debug = require('debug')('chatinyourfxxxxxxterminal:server');
 var http = require('http');
@@ -15,9 +14,16 @@ var message = require('./routes/message.js');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var bb = require('express-busboy');
 
 var app = express();
 
+
+bb.extend(app, {
+    upload: true,
+    path: path.join(__dirname, 'temp'),
+    allowedPath: /^\/file$/
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,8 +34,6 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
     secret: 'keyboard cat'
     //resave: false,
@@ -42,6 +46,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/message', message);
 
+app.use('/uploads', express.static('save'));
 
 // passport config
 var Account = require('./models/account');
@@ -172,3 +177,6 @@ function onListening() {
     : 'port ' + addr.port;
   console.log('Listening on ' + bind);
 }
+
+global.appRoot = path.resolve(__dirname);
+
