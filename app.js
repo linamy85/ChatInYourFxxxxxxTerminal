@@ -92,8 +92,8 @@ var online = {}
 io.sockets.on('connection', function(socket) {
 
   // User sends messages.
-  socket.on('chat message', function(text) {
-    console.log(socket.username, "sends", text, "to", socket.room);
+  socket.on('chat message', function(text, counter) {
+    console.log(socket.username, "sends #", counter, ":", text, "to", socket.room);
     // TODO: store to DB (need protocol like counter??)
     var msg = new Message({
       roomID: socket.room,
@@ -101,12 +101,16 @@ io.sockets.on('connection', function(socket) {
       text: text,
       sticker: ""
     })
-    msg.save(function(err) {
+    msg.save(function(err, msg) {
       if (err) {
         socket.emit("Update failed", msg);
         return console.log("Save new message: ", err);
       }
-      socket.broadcast.to(socket.room).emit("chat message", socket.username, text);
+      console.log("New message:", msg)
+      socket.broadcast.to(socket.room).emit(
+        "chat message", socket.username, text, msg.id
+      );
+      socket.emit("Message id", counter, msg.id);
     })
   });
   
@@ -131,10 +135,22 @@ io.sockets.on('connection', function(socket) {
       socket.broadcast.to(roomid).emit("Online", socket.username)
     })
   });
+  
   socket.on('set name', function(name) {
     socket.username = name;
     // User shows online
     online[socket.username] = true
+  })
+
+  socket.on('delete msg', function(id) {
+    Message.findByIdAndRemove(id, function(err, doc) {
+      if (err) {
+        console.log("Error removing id", id);
+        return
+      }
+      console.log("Delete response:", doc);
+      io.in(socket.room).emit("delete msg confirm", id);
+    })
   })
 
   socket.on('disconnect', function() {

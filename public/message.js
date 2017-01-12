@@ -2,6 +2,7 @@
 // Connects to socket.io server.
 //
 var userlist = {}
+var counter = 0;
 
 $(document).ready(function() {
   var username = $("#username").text();
@@ -10,27 +11,35 @@ $(document).ready(function() {
     url: '/message/' + getRoomId(),
     success: function(data) {
       //console.log(data)
-      data.forEach(function(msg) {
-        if (username == msg.sender) {
-          $('#messages').append($('<li>').text(msg.text).css("text-align", "right"));
-        } else {
-          $('#messages').append($('<li>').text("["+msg.sender+"] "+msg.text));
-        }
-      })
-      socketRegister()
+      socketRegister(data)
     },
     //contentType: "application/json",
     dataType: 'json'
   });
 });
 
-function socketRegister() {
+function socketRegister(data) {
   var username = $("#username").text();
   console.log("My name is:", username)
 
   var socket = io({
     'connect timeout': 5000
   });
+
+  data.forEach(function(msg) {
+    if (username == msg.sender) {
+      $('#messages').append($('<li id="'+msg._id+'">')
+        .text(msg.text).css("text-align", "right"));
+      $('#'+msg._id).dblclick(function() {
+        if (confirm("Delete message:", msg.text, "?")) {
+          socket.emit("delete msg", msg._id)
+        }
+      })
+    } else {
+      $('#messages').append($('<li id="'+msg._id+'">').text("["+msg.sender+"] "+msg.text));
+    }
+  })
+
   var roomid = getRoomId() ;
   console.log(socket)
 
@@ -63,8 +72,8 @@ function socketRegister() {
   })
 
   // Gets message
-  socket.on('chat message', function(sender, msg){
-    $('#messages').append($('<li>').text("["+sender+"] "+msg));
+  socket.on('chat message', function(sender, msg, id){
+    $('#messages').append($('<li id="'+id+'">').text("["+sender+"] "+msg));
   });
 
   // Disconnect from server.
@@ -78,13 +87,32 @@ function socketRegister() {
     console.log('Pusheen misses you.');
   });
 
+  // Gets server submit msg success response.
+  socket.on('Message id', function(index, id) {
+    console.log('Message #', index, '=>', id);
+    $('#'+index).attr("id", id.toString());
+    $('#'+id).dblclick(function() {
+      if (confirm("Delete message:", $('#'+id).text(), "?")) {
+        socket.emit("delete msg", id)
+      }
+    })
+  });
+
+  // Removes message confirmed by server.
+  socket.on('delete msg confirm', function(id) {
+    $('#'+id).remove();
+    console.log('ID', id, 'removed.');
+  })
+
   // Submits message.
   $('#msg-form').submit(function(){
     console.log('in');
     let msg = $('#m').val();
-    socket.emit('chat message', msg);
+    socket.emit('chat message', msg, counter);
     $('#m').val('');
-    $('#messages').append($('<li>').text(msg).css("text-align", "right"));
+    $('#messages').append($('<li id="'+counter+'">').text(msg)
+      .css("text-align", "right"));
+    counter = (counter + 1) % 100000000;  // Avoids overflow.
     return false;
   });
 }
@@ -104,6 +132,5 @@ function render_users() {
     else
       $('#onlinelist').append('<font color="blue">'+name+' </font>')
   }
-  
 }
 
