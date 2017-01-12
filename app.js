@@ -164,7 +164,7 @@ io.sockets.on('connection', function(socket) {
 
 ////////////// Port binding /////////////
 
-var port = normalizePort(process.env.PORT || '7878');
+var port = normalizePort(process.env.PORT || '7777');
 app.set('port', port);
 
 server.listen(port);

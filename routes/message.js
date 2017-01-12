@@ -11,7 +11,7 @@ router.post('/:room', function(req, res) {
       res.status(500).send("Load messages in room error.")
       return console.log("Load message from room:", err)
     }
-    console.log("Finds", msgs)
+    //console.log("Finds", msgs)
     res.json(msgs)
   })
 })
