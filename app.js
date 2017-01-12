@@ -85,8 +85,12 @@ var io = require('socket.io').listen(server);
 
 ///////////// Socket.io ///////////////
 var Message = require('./models/message');
+var Chatroom = require('./models/chatroom');
+
+var online = {}
 
 io.sockets.on('connection', function(socket) {
+
   // User sends messages.
   socket.on('chat message', function(text) {
     console.log(socket.username, "sends", text, "to", socket.room);
@@ -109,13 +113,34 @@ io.sockets.on('connection', function(socket) {
   socket.on('join room', function(roomid) {
     socket.room = roomid;
     socket.join(roomid);
+    Chatroom.findById(roomid, function(err, obj) {
+      if (err) {
+        console.log("Error finding room meta:", roomid)
+        socket.emit("Room meta error");
+      }
+      var status = {}
+      console.log("obj", obj)
+      obj.users.forEach(function(user, id, arr) {
+        if (user in online) {
+          status[user] = true
+        } else {
+          status[user] = false
+        }
+      })
+      socket.emit("Room meta", status);
+      socket.broadcast.to(roomid).emit("Online", socket.username)
+    })
   });
   socket.on('set name', function(name) {
     socket.username = name;
+    // User shows online
+    online[socket.username] = true
   })
 
   socket.on('disconnect', function() {
-    socket.leave(socket.room)
+    socket.broadcast.to(socket.room).emit("Offline", socket.username);
+    socket.leave(socket.room);
+    delete online[socket.username];
   })
 });
 
