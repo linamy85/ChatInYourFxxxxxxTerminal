@@ -106,10 +106,6 @@ router.post('/payload', function(req, res) {
   });
 });
 
-router.get('/file', function(req, res) {
-    res.render('test');
-});
-
 router.post('/file', function(req, res) {
     console.log(req.files);
     var source = req.files.fileToUpload.file;
@@ -118,8 +114,8 @@ router.post('/file', function(req, res) {
         if (err) return console.error(err)
         console.log("success!")
     });
-    res.status(200).send('/uplaods' + path.basename(source));
+    res.status(200).send(path.basename(source));
 });
-    
+  
 
 module.exports = router;

@@ -29,14 +29,14 @@ function socketRegister(data) {
   data.forEach(function(msg) {
     if (username == msg.sender) {
       $('#messages').append($('<li id="'+msg._id+'">')
-        .text(msg.text).css("text-align", "right"));
+        .html(msg.text).css("text-align", "right"));
       $('#'+msg._id).dblclick(function() {
         if (confirm("Delete message:", msg.text, "?")) {
           socket.emit("delete msg", msg._id)
         }
       })
     } else {
-      $('#messages').append($('<li id="'+msg._id+'">').text("["+msg.sender+"] "+msg.text));
+      $('#messages').append($('<li id="'+msg._id+'">').html("["+msg.sender+"] "+msg.text));
     }
   })
 
@@ -73,7 +73,7 @@ function socketRegister(data) {
 
   // Gets message
   socket.on('chat message', function(sender, msg, id){
-    $('#messages').append($('<li id="'+id+'">').text("["+sender+"] "+msg));
+    $('#messages').append($('<li id="'+id+'">').html("["+sender+"] "+msg));
   });
 
   // Disconnect from server.
@@ -110,12 +110,22 @@ function socketRegister(data) {
     let msg = $('#m').val();
     socket.emit('chat message', msg, counter);
     $('#m').val('');
-    $('#messages').append($('<li id="'+counter+'">').text(msg)
+    $('#messages').append($('<li id="'+counter+'">').html(msg)
       .css("text-align", "right"));
     counter = (counter + 1) % 100000000;  // Avoids overflow.
     return false;
   });
+  // File Transfer
+  $('#file-form').ajaxForm(function(name){
+    console.log('file in');
+    let msg = '<a href="/uploads/'+name+'">'+name+'</a>';
+    socket.emit('chat message', msg, counter);
+    $('#messages').append($('<li id="'+counter+'">').css("text-align", "right").html(msg));
+    counter = (counter + 1) % 100000000;
+    return;
+  }, 'text');
 }
+       
 
 function getRoomId() {
   let url = window.location.href;

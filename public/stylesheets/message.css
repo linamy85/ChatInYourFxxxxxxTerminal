@@ -1,32 +1,55 @@
-* { 
-  margin: 0; padding: 0; box-sizing: border-box; 
 }
 
 body { 
   font: 13px Helvetica, Arial; 
 }
 
-form { 
-  background: #000; 
-  padding: 3px; 
-  position: fixed; 
-  bottom: 0; 
-  width: 100%; 
+#msg-form {
+  background: #000;
+  padding: 3px;
+  position: fixed;
+  bottom: 10%;
+  width:100%;
+  right: 0;
 }
 
-form input { 
+#msg-form input { 
   border: 0; 
   padding: 10px; 
   width: 90%; 
   margin-right: .5%; 
 }
 
-form button { 
+#msg-form  button { 
   width: 9%; 
   background: rgb(130, 224, 255); 
   border: none; 
   padding: 10px; 
 }
+
+#file-form {
+  background: #FFF;
+  padding: 3px;
+  position: fixed;
+  bottom: 0;
+  width:100%;
+  right: 0;
+}
+
+#file-form input { 
+  border: 0; 
+  padding: 10px; 
+  width:90%; 
+  margin-right: .5%; 
+}
+
+#file-form  button { 
+  width: 9%; 
+  background: rgb(130, 224, 255); 
+  border: none; 
+  padding: 10px; 
+}
+
 
 #messages { 
   list-style-type: none; 
@@ -53,4 +76,3 @@ input[type=searchtext]:focus {
   width: 100%;
 
 }
-
