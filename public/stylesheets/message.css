@@ -1,53 +1,78 @@
 }
 
 body { 
-  font: 13px Helvetica, Arial; 
+  font: 14px Helvetica, Arial; 
 }
-
+.bg{
+  background-color: black;
+}
+/*for words shown in black backgroud*/
+.word{
+  color: white;
+  font-family: 'Play', sans-serif;
+}
+/*for button*/
+#word{
+  font-family: 'Play', sans-serif;
+}
 #msg-form {
-  background: #000;
+
+  background: black;
   padding: 3px;
   position: fixed;
-  bottom: 10%;
+  bottom: 2%;
   width:100%;
   right: 0;
 }
 
 #msg-form input { 
-  border: 0; 
+  width: 90%;
+  /*border: 0; 
   padding: 10px; 
-  width: 90%; 
+  */ 
   margin-right: .5%; 
+  margin-left: 0.5%; 
+  margin-top: 0.5%;
 }
 
 #msg-form  button { 
-  width: 9%; 
-  background: rgb(130, 224, 255); 
+  /*width: 9%; 
+  background: red; 
   border: none; 
-  padding: 10px; 
+  padding: 10px; */
 }
-
+#choose-file{
+  /*font: 24px;*/
+  /*font-family: 'Play', sans-serif;*/
+  color:white;
+}
+#send-file{
+  margin-left: 18%;
+  margin-bottom: 0.5%;
+}
 #file-form {
-  background: #FFF;
+  background: black;
   padding: 3px;
   position: fixed;
-  bottom: 0;
+  bottom: 8%;
   width:100%;
   right: 0;
 }
 
 #file-form input { 
-  border: 0; 
+  /*border: 0; 
   padding: 10px; 
-  width:90%; 
-  margin-right: .5%; 
+  width:90%;*/
+  margin:.5%; 
+  
 }
 
-#file-form  button { 
-  width: 9%; 
+#file-form  button {
+  margin-left: 0.5%; 
+  /*width: 9%; 
   background: rgb(130, 224, 255); 
   border: none; 
-  padding: 10px; 
+  padding: 10px; */
 }
 
 
@@ -57,12 +82,14 @@ body {
   padding: 0; 
 }
 
-#messages li { 
+#messages li {
+  /*background: rgb(224,224,224); */
+  background: white; 
   padding: 5px 10px; 
 }
 
 #messages li:nth-child(odd) { 
-  background: #eee; 
+  background: #afbdd4; 
 }
 
 .input[type=searchtext] {

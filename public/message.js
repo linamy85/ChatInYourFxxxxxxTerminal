@@ -135,12 +135,12 @@ function getRoomId() {
 }
 
 function render_users() {
-  $('#onlinelist').text("Say chao with: ")
+  $('#onlinelist').text("Chating with ")
   for (var name in userlist) {
     if (userlist[name])
-      $('#onlinelist').append('<font color="red">'+name+' </font>')
+      $('#onlinelist').append('<font color="orange">'+name+' </font>')
     else
-      $('#onlinelist').append('<font color="blue">'+name+' </font>')
+      $('#onlinelist').append('<font color="white">'+name+' </font>')
   }
 }
 

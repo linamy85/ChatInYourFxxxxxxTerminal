@@ -152,6 +152,10 @@ io.sockets.on('connection', function(socket) {
       io.in(socket.room).emit("delete msg confirm", id);
     })
   })
+  
+  // socket.on('instant msg', function(i) {
+  //     io.in(socket.room).emit("send instant msg", id);
+  // })
 
   socket.on('disconnect', function() {
     socket.broadcast.to(socket.room).emit("Offline", socket.username);

@@ -5,14 +5,18 @@
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen" />
     <link rel="stylesheet"  href="/stylesheets/style.css" />
     <link rel="stylesheet" href="/stylesheets/message.css" />
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css?family=Exo|Gloria+Hallelujah|Kumar+One|Orbitron|Play|Poiret+One|Space+Mono" rel="stylesheet">    
   </head>
-  <body>
+  <body class="bg">
     <div id="username" style="display: none;"><%= locals.user.username %></div>
-    <div id="onlinelist"></div>
-    <input type="searchtext" name="search" id="search" placeholder="Search..">
-
+    <div style="font-size:24px" class="word" id="onlinelist"></div>
+    <br>
+    <input type="searchtext" name="search" id="search" placeholder="We've chatted about...">
+    <br>
 
     <!-- Modal -->
+    <br>
     <div class="modal fade" id="result-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -42,17 +46,22 @@
         </div>
       </div>
     </div>
-
     <!-- Message box -->
     <ul id="messages"></ul>
     <form id="msg-form" action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
+      <input id="m" autocomplete="off" />
+      <button id="word" class="btn btn-warning">Send Msg</button>
     </form>
 
     <!-- File Transfer -->
     <ul id="files"></ul>
     <form id="file-form" action="/file" method="post" enctype="multipart/form-data">
-        <input type="file" name="fileToUpload" id="fileToUpload"><button>Send File</button>
+        <div style="font-size:16px" id="choose-file" class="col-lg-2">
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        </div>
+        <div id="send-file">
+        <button id="word" class="btn btn-warning">Send File</button>
+        </div>
     </form>
 
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
