@@ -10,7 +10,7 @@ function reloadrooms() {
     data.forEach(function(room) {
       console.log(room)
       $('#roomlist').append(
-        '<li><a href="/message/'+room._id+'">'+room.name+'</a></li>'
+        '<div><a href="/message/'+room._id+'">'+room.name+'</a></div>'
       )
     })
   })

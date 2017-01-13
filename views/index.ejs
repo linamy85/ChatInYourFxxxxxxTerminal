@@ -13,12 +13,10 @@
   <!-- style="background-color:#FFD382;padding:10px;margin-bottom:5px;" -->
   <div>
     <h1 class="word"><i class="fa fa-terminal" aria-hidden="true"></i><%= title %></h1>
-    
-    <!-- <p>Welcome to <%= title %></p> -->
     <% if (locals.user) { %>
       <h4 class="word">Hey <%= locals.user.username %>, I miss you...</h4>
-      <div style="background-color:white;padding:10px;margin-bottom:15px;">
-      <ul class="list" id="roomlist"></ul>
+      <div style="background-color:white; padding:10px; margin-bottom:15px;">
+      <div class="list" id="roomlist"></div>
       </div>
       <button id="word" class="btn btn-warning" onclick="createroom()">Create room</button>
       &nbsp;
@@ -30,8 +28,6 @@
       <button id="word" class="btn btn-default" onclick="location.href='/register'">Register</button>
       &nbsp;
       <button id="word" class="btn btn-warning" onclick="location.href='/login'">Login</button>
-      <!-- <a href="/register">Register</a> -->
-      <!-- <a href="/login">Login</a> -->
     <% } %>
   </div>
     <script type="text/javascript" src="./jquery-3.1.1.min.js"></script>
