@@ -145,6 +145,15 @@ $("#search").bind("enterKey",function(e){
     }),
     success: function(data) {
       console.log(data)
+      $("#result-insert").empty()
+      data.forEach(function(msg, idx, arr) {
+        $("#result-insert").append('<tr>'+
+          '<th scope="row">'+idx+'</th>'+
+          '<td>'+msg.created_at+'</td>'+
+          '<td>'+msg.sender+'</td>'+
+          '<td>'+msg.text+'</td></tr>')
+      })
+      $('#result-modal').modal('show') 
     },
     contentType: "application/json",
     dataType: 'json'

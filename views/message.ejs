@@ -10,7 +10,39 @@
     <div id="username" style="display: none;"><%= locals.user.username %></div>
     <div id="onlinelist"></div>
     <input type="searchtext" name="search" id="search" placeholder="Search..">
-    
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="result-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="result-title"></h4>
+          </div>
+          <div class="modal-body" id="result-body">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Time</th>
+                  <th>Sender</th>
+                  <th>Message</th>
+                </tr>
+              </thead>
+              <tbody id="result-insert">
+
+              </tbody>
+            </table>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Message box -->
     <ul id="messages"></ul>
     <form id="msg-form" action="">
