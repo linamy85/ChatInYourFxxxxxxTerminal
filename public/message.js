@@ -118,7 +118,7 @@ function socketRegister(data) {
   // File Transfer
   $('#file-form').ajaxForm(function(name){
     console.log('file in');
-    let msg = '<a href="/uploads/'+name+'">'+name+'</a>';
+    let msg = '<a target="_blank" href="/uploads/'+name+'">'+name+'</a>';
     socket.emit('chat message', msg, counter);
     $('#messages').append($('<li id="'+counter+'">').css("text-align", "right").html(msg));
     counter = (counter + 1) % 100000000;
