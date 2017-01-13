@@ -56,11 +56,12 @@
     <!-- File Transfer -->
     <ul id="files"></ul>
     <form id="file-form" action="/file" method="post" enctype="multipart/form-data">
-        <div style="font-size:16px" id="choose-file" class="col-lg-2">
+        <div style="font-size:16px" id="choose-file" class="col-lg-10">
         <input type="file" name="fileToUpload" id="fileToUpload">
         </div>
         <div id="send-file">
         <button id="word" class="btn btn-warning">Send File</button>
+        <button id="word" class="btn btn-default" onclick="location.href='/'">Chat Later</button>
         </div>
 
     </form>
