@@ -116,14 +116,19 @@ function socketRegister(data) {
     return false;
   });
   // File Transfer
-  $('#file-form').ajaxForm(function(name){
+  $('#file-form').ajaxForm(function(names){
     console.log('file in');
-    let msg = '<a target="_blank" href="/uploads/'+name+'">'+name+'</a>';
+    var len = names.length;
+    msg = "";
+    for(var i=0; i<len; i++){
+        if(i!=0) msg += '<br>';
+        msg += '<a target="_blank" href="/uploads/'+names[i]+'">'+names[i]+'</a>';
+   }
     socket.emit('chat message', msg, counter);
     $('#messages').append($('<li id="'+counter+'">').css("text-align", "right").html(msg));
     counter = (counter + 1) % 100000000;
     return;
-  }, 'text');
+  }, 'json');
 }
        
 

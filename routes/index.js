@@ -108,13 +108,18 @@ router.post('/payload', function(req, res) {
 
 router.post('/file', function(req, res) {
     console.log(req.files);
-    var source = req.files.fileToUpload.file;
-    var dest = global.appRoot + '/save/' + path.basename(source);
-    fse.move(source, dest, function(err){
-        if (err) return console.error(err)
-        console.log("success!")
-    });
-    res.status(200).send(path.basename(source));
+    var len = req.files.fileToUpload.length;
+    var paths = [];
+    for(var i=0; i<len; i++){
+        var source = req.files.fileToUpload[i].file;
+        var dest = global.appRoot + '/save/' + path.basename(source);
+        fse.move(source, dest, function(err){
+            if (err) return console.error(err)
+            console.log("success!");
+        });
+        paths.push(path.basename(source));
+    }
+    res.status(200).send(paths);
 });
   
 
