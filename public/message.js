@@ -134,3 +134,25 @@ function render_users() {
   }
 }
 
+// Registers enter key for search query.
+$("#search").bind("enterKey",function(e){
+  $.ajax({
+    type: 'POST',
+    url: '/message/_search',
+    data: JSON.stringify({
+      room: getRoomId(),
+      query: $("#search").val() 
+    }),
+    success: function(data) {
+      console.log(data)
+    },
+    contentType: "application/json",
+    dataType: 'json'
+  });
+});
+
+$("#search").keyup(function(e){
+  if(e.keyCode == 13) {
+    $(this).trigger("enterKey");
+  }
+});

@@ -27,6 +27,9 @@ function createroom() {
   } else if (name == '') {
     alert("No empty room name!!!")
     return;
+  } else if (/^[a-zA-Z0-9- ]*$/.test(str)) {
+    alert("Only english and number are acceptable.");
+    return;
   }
 
   var index = 0;
