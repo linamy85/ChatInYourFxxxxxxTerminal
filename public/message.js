@@ -84,7 +84,10 @@ function socketRegister(data) {
     userlist[username] = false
     render_users();
   })
-
+  // ////////////
+  // socket.on('instant msg', function(data){
+  //   console.log(data.message);
+  // });
   // Gets message
   socket.on('chat message', function(sender, msg, id){
     $('#messages').append($('<li id="'+id+'">').html("["+sender+"] "+msg));
