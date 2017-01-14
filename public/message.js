@@ -44,6 +44,9 @@ function socketRegister(data) {
   console.log(socket)
 
   socket.on('connect', function() {
+    //show state
+    $('#state').append($('<font color="#6d84b4">Connected</font>')
+      .css("text-align", "right"));
     socket.emit('set name', username);
     socket.emit('join room', roomid);
     console.log("Server ensures me to join", roomid);
@@ -78,6 +81,9 @@ function socketRegister(data) {
 
   // Disconnect from server.
   socket.on('disconnect', function(msg){
+    //show state
+    $('#state').append($('<font color="#6d84b4">Disconnected</font>')
+      .css("text-align", "right"));
     console.log('disconnected');
     socket = io({'connect timeout': 5000});
   });
