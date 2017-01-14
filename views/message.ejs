@@ -12,9 +12,12 @@
     <div id="username" style="display: none;"><%= locals.user.username %></div>
     <div style="font-size:24px" class="word" id="onlinelist"></div>
     <br>
-    <input type="searchtext" name="search" id="search" placeholder="We've chatted about...">
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1">?</span>
+      <input type="searchtext" name="search" class="form-control" id="search" placeholder="Google me..." aria-describedby="basic-addon1">
+    </div>
     <br>
-
+    
     <!-- Modal -->
     <br>
     <div class="modal fade" id="result-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -22,7 +25,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="result-title"></h4>
+            <h4 class="modal-title" id="result-title">Search result</h4>
           </div>
           <div class="modal-body" id="result-body">
             <table class="table table-striped">
@@ -38,7 +41,7 @@
 
               </tbody>
             </table>
-            
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>

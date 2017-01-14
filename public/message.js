@@ -3,47 +3,58 @@
 //
 var userlist = {}
 var counter = 0;
+var disconnect = true;
+var username = $("#username").text();
 
-$(document).ready(function() {
-  var username = $("#username").text();
+function reloadmsgs() {
   $.ajax({
     type: 'POST',
     url: '/message/' + getRoomId(),
     success: function(data) {
-      //console.log(data)
-      socketRegister(data)
+      $('#messages').empty();
+      data.forEach(function(msg) {
+        if (username == msg.sender) {
+          $('#messages').append($('<li id="'+msg._id+'">')
+            .html(msg.text).css("text-align", "right"));
+          $('#'+msg._id).dblclick(function() {
+            if (disconnect) {
+              alert("You're disconnected now...");
+              return false;
+            }
+            if (confirm("Delete message:", msg.text, "?")) {
+              socket.emit("delete msg", msg._id)
+            }
+          })
+        } else {
+          $('#messages').append(
+            $('<li id="'+msg._id+'">').html("["+msg.sender+"] "+msg.text));
+        }
+      })
     },
-    //contentType: "application/json",
     dataType: 'json'
   });
+
+}
+
+$(document).ready(function() {
+  socketRegister();
 });
 
 function socketRegister(data) {
-  var username = $("#username").text();
   console.log("My name is:", username)
 
   var socket = io({
     'connect timeout': 5000
   });
 
-  data.forEach(function(msg) {
-    if (username == msg.sender) {
-      $('#messages').append($('<li id="'+msg._id+'">')
-        .html(msg.text).css("text-align", "right"));
-      $('#'+msg._id).dblclick(function() {
-        if (confirm("Delete message:", msg.text, "?")) {
-          socket.emit("delete msg", msg._id)
-        }
-      })
-    } else {
-      $('#messages').append($('<li id="'+msg._id+'">').html("["+msg.sender+"] "+msg.text));
-    }
-  })
 
   var roomid = getRoomId() ;
   console.log(socket)
 
   socket.on('connect', function() {
+    reloadmsgs();
+    freeAllForm();
+    disconnect = false;
     socket.emit('set name', username);
     socket.emit('join room', roomid);
     console.log("Server ensures me to join", roomid);
@@ -78,6 +89,10 @@ function socketRegister(data) {
 
   // Disconnect from server.
   socket.on('disconnect', function(msg){
+    // Disable all of the forms.
+    disableAllForm();
+
+    disconnect = true;
     console.log('disconnected');
     socket = io({'connect timeout': 5000});
   });
@@ -106,6 +121,10 @@ function socketRegister(data) {
 
   // Submits message.
   $('#msg-form').submit(function(){
+    if (disconnect) {
+      alert("You're disconnected now...");
+      return false;
+    }
     console.log('in');
     let msg = $('#m').val();
     socket.emit('chat message', msg, counter);
@@ -118,6 +137,10 @@ function socketRegister(data) {
   // File Transfer
   $('#file-form').ajaxForm(function(names){
     console.log('file in');
+    if (disconnect) {
+      alert("You're disconnected now...");
+      return false;
+    }
     var len = names.length;
     msg = "";
     for(var i=0; i<len; i++){
@@ -180,3 +203,17 @@ $("#search").keyup(function(e){
     $(this).trigger("enterKey");
   }
 });
+
+function disableAllForm() {
+  console.log("Disable all form inputs.")
+  $("#msg-form :input").prop('readonly', true);
+  $("#file-form :input").prop('readonly', true);
+  $("#search").prop('readonly', true);
+}
+
+function freeAllForm() {
+  console.log("Free all form inputs!")
+  $("#msg-form :input").prop('readonly', false);
+  $("#file-form :input").prop('readonly', false);
+  $("#search").prop('readonly', false);
+}
