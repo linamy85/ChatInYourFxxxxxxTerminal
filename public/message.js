@@ -6,7 +6,7 @@ var counter = 0;
 var disconnect = true;
 var username = $("#username").text();
 
-function reloadmsgs() {
+function reloadmsgs(socket) {
   $.ajax({
     type: 'POST',
     url: '/message/' + getRoomId(),
@@ -52,7 +52,7 @@ function socketRegister(data) {
   console.log(socket)
 
   socket.on('connect', function() {
-    reloadmsgs();
+    reloadmsgs(socket);
     freeAllForm();
     disconnect = false;
     socket.emit('set name', username);
