@@ -12,14 +12,18 @@
     <div id="username" style="display: none;"><%= locals.user.username %></div>
     <div style="font-size:24px" class="word" id="onlinelist"></div>
     <br>
+
+    <div class="col-lg-3">
     <div class="input-group">
-      <span class="input-group-addon" id="basic-addon1">?</span>
-      <input type="searchtext" name="search" class="form-control" id="search" placeholder="Google me..." aria-describedby="basic-addon1">
+      <span class="input-group-addon" id="basic-addon1">Search</span>
+      <input type="searchtext" name="search" class="form-control" id="search" placeholder="We have talked about..." aria-describedby="basic-addon1">
     </div>
+    </div>
+    <div style="font-size:24px" class="word" id="state" align="right"></div>
+
     <br>
-    
+    <br>
     <!-- Modal -->
-    <br>
     <div class="modal fade" id="result-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -60,11 +64,11 @@
     <ul id="files"></ul>
     <form id="file-form" action="/file" method="post" enctype="multipart/form-data">
         <div style="font-size:16px" id="choose-file" class="col-lg-10">
-        <input type="file" name="fileToUpload" id="fileToUpload">
+        <input type="file" name="fileToUpload" id="fileToUpload" multiple>
         </div>
         <div id="send-file">
         <button id="word" class="btn btn-warning">Send File</button>
-        <button id="word" class="btn btn-default" onclick="location.href='/'">Chat Later</button>
+        <button id="word" class="btn btn-default" onclick="location.href='/'">Leave room</button>
         </div>
 
     </form>

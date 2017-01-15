@@ -52,6 +52,9 @@ function socketRegister(data) {
   console.log(socket)
 
   socket.on('connect', function() {
+    //show state
+    $('#state').html($('<font color="#6d84b4">Connected</font>')
+      .css("text-align", "right"));
     reloadmsgs(socket);
     freeAllForm();
     disconnect = false;
@@ -81,7 +84,10 @@ function socketRegister(data) {
     userlist[username] = false
     render_users();
   })
-
+  // ////////////
+  // socket.on('instant msg', function(data){
+  //   console.log(data.message);
+  // });
   // Gets message
   socket.on('chat message', function(sender, msg, id){
     $('#messages').append($('<li id="'+id+'">').html("["+sender+"] "+msg));
@@ -89,6 +95,9 @@ function socketRegister(data) {
 
   // Disconnect from server.
   socket.on('disconnect', function(msg){
+    //show state
+    $('#state').html($('<font color="#6d84b4">Disconnected</font>')
+      .css("text-align", "right"));
     // Disable all of the forms.
     disableAllForm();
 
@@ -136,6 +145,8 @@ function socketRegister(data) {
   });
   // File Transfer
   $('#file-form').ajaxForm(function(names){
+    console.log(this)
+    console.log(names)
     console.log('file in');
     if (disconnect) {
       alert("You're disconnected now...");

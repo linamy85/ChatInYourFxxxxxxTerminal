@@ -108,17 +108,34 @@ router.post('/payload', function(req, res) {
 
 router.post('/file', function(req, res) {
     console.log(req.files);
+    if (!(req.files.fileToUpload)) {
+      res.status(200).send([]);
+      return console.log("No file!")
+    }
     var len = req.files.fileToUpload.length;
     var paths = [];
-    for(var i=0; i<len; i++){
-        var source = req.files.fileToUpload[i].file;
+    // Only one file will have no length
+    if (typeof len === 'undefined' || !len) {
+        var source = req.files.fileToUpload.file;
         var dest = global.appRoot + '/save/' + path.basename(source);
         fse.move(source, dest, function(err){
             if (err) return console.error(err)
             console.log("success!");
         });
         paths.push(path.basename(source));
+    } else { 
+      console.log("Multiple files!")
+      for(var i=0; i<len; i++){
+          var source = req.files.fileToUpload[i].file;
+          var dest = global.appRoot + '/save/' + path.basename(source);
+          fse.move(source, dest, function(err){
+              if (err) return console.error(err)
+              console.log("success!");
+          });
+          paths.push(path.basename(source));
+      }
     }
+    console.log("paths", paths);
     res.status(200).send(paths);
 });
   
